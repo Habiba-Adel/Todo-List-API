@@ -323,9 +323,6 @@ Tests:       15 passed, 15 total
 
 ## 📬 Postman Collection
 
-🚀 **Import the Postman collection to test all endpoints!**
-
-[📥 Download Postman Collection](./postman_collection.json)
 
 **Included in Collection:**
 - All user endpoints (register, login)
