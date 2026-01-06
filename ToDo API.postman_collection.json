@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "9810307b-3611-44a0-b281-437ecf4ed7e6",
+		"name": "ToDo API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44858396"
+	},
+	"item": [
+		{
+			"name": "User Endpoints",
+			"item": [
+				{
+					"name": "Register new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"habiba adel\",\r\n  \"email\": \"test@example.com\",\r\n  \"password\": \"123123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"register"
+							]
+						},
+						"description": "This endpoint allows a new user to create an account on the Todo List API. The request must include the user's name, email, and password. The API will first validate the input fields, ensure that the email is unique, and then hash the password for secure storage. On successful registration, the API responds with a JSON Web Token (JWT), which should be used for authenticating subsequent requests to protected routes such as creating or managing todos.\n\n_**Key Notes:**_\n\n- Email uniqueness is enforced.\n    \n- Passwords are securely hashed using bcrypt.\n    \n- Returns a JWT token for immediate authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@example.com\",\r\n  \"password\": \"123123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "**Description:**\n\nThis endpoint allows an existing user to authenticate with the API using their registered email and password. After validating the input, the API checks whether the email exists and whether the provided password matches the stored hash. Upon successful authentication, a JSON Web Token (JWT) is returned, which can be used to access all protected routes, such as creating, updating, or retrieving todos.\n\n**Key Notes:**\n\n- Returns a JWT token valid for authenticated requests.\n    \n- Invalid email or password returns a `400` status with an error message.\n    \n- Password comparison is secure and done using bcrypt."
+					},
+					"response": []
+				}
+			],
+			"description": "**Description:**  \n  \nThis folder contains all endpoints related to user management in the Todo List API. It allows new users to register and existing users to authenticate. All endpoints in this folder handle input validation, proper error responses, and return a JSON Web Token (JWT) for authenticated requests.\n\n**Included Endpoints:**\n\n1. **Register User (****`POST /users/register`****)** – Create a new account and receive a JWT.\n    \n2. **Login User (****`POST /users/login`****)** – Authenticate an existing user and receive a JWT.\n    \n\n**Notes:**\n\n- JWT tokens obtained from these endpoints are required for accessing all todo-related endpoints.\n    \n- Input data is strictly validated to prevent unauthorized access or malformed requests.\n    \n- Error handling ensures users receive meaningful messages for issues like duplicate emails or invalid credentials."
+		},
+		{
+			"name": "ToDo Endpoints",
+			"item": [
+				{
+					"name": "Deleting existing todo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTVkNjVlMzY4ZTliNTc4M2QwYzRjY2YiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3Njc3Mjg3MjEsImV4cCI6MTc2NzczMjMyMX0.y6n5M2S6MrpvhsbHVp_VxPKiFvLG7tz2ETNXB5pwGkU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/todos/695d66a968e9b5783d0c4cd3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos",
+								"695d66a968e9b5783d0c4cd3"
+							]
+						},
+						"description": "**Description:**  \n  \nThis endpoint allows an authenticated user to delete a todo item identified by its ID. Only the author of the todo can delete it. The API verifies authorization before removing the todo from the database. On successful deletion, the API responds with a `204 No Content` status, indicating the todo has been successfully removed.\n\n**Key Notes:**\n\n- Only the author can delete a todo.\n    \n- Returns `403 Forbidden` if the user is not the author, `404 Not Found` if the todo does not exist."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Todos (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTVkNjVlMzY4ZTliNTc4M2QwYzRjY2YiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3Njc3Mjg3MjEsImV4cCI6MTc2NzczMjMyMX0.y6n5M2S6MrpvhsbHVp_VxPKiFvLG7tz2ETNXB5pwGkU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/todos?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "**Description:**  \n  \nThis endpoint retrieves a list of todos created by the authenticated user. The response is paginated to improve performance and reduce data transfer for large datasets. Users can specify `page` and `limit` query parameters to control pagination. The API returns a list of todos along with metadata including the current page, limit, and total number of todos.\n\n**Key Notes:**\n\n- Default pagination: `page=1`, `limit=10`.\n    \n- Only todos authored by the authenticated user are returned.\n    \n- Response includes both the todo data and pagination info"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Todo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "**Description:**  \n  \nThis endpoint retrieves a specific todo item by its ID. Only the author of the todo can access it. The API checks the JWT token for authentication and verifies that the requesting user is the author. On success, it returns the todo item with all its fields, including timestamps and author information.\n\n**Key Notes:**\n\n- Authorization is enforced to ensure only the author can view the todo.\n    \n- Returns `403 Forbidden` if the user is not the author.\n    \n- Returns `404 Not Found` if the todo does not exist."
+					},
+					"response": []
+				},
+				{
+					"name": "Adding new todo for existed user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTVkNjVlMzY4ZTliNTc4M2QwYzRjY2YiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3Njc3Mjg3MjEsImV4cCI6MTc2NzczMjMyMX0.y6n5M2S6MrpvhsbHVp_VxPKiFvLG7tz2ETNXB5pwGkU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Finishing the project\",\r\n  \"description\": \"making postman collection\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/todos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos"
+							]
+						},
+						"description": "**Description:**  \n  \nThis endpoint allows an authenticated user to create a new todo item. The user must provide a `title` and `description` in the request body. The API automatically associates the todo with the authenticated user (as the `author`). After validation, the todo is saved in the database, and the API responds with the newly created todo item, including its ID, timestamps, and author information.\n\n**Key Notes:**\n\n- Only authenticated users can create todos.\n    \n- Input fields are validated to ensure proper format and presence.\n    \n- Author is automatically derived from the JWT token payload."
+					},
+					"response": []
+				},
+				{
+					"name": "Update todo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTVkNjVlMzY4ZTliNTc4M2QwYzRjY2YiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3Njc3Mjg3MjEsImV4cCI6MTc2NzczMjMyMX0.y6n5M2S6MrpvhsbHVp_VxPKiFvLG7tz2ETNXB5pwGkU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Buy groceries and fruits\",\r\n  \"description\": \"Milk, eggs, bread, cheese, apples\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/todos/695d66a968e9b5783d0c4cd3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos",
+								"695d66a968e9b5783d0c4cd3"
+							]
+						},
+						"description": "**Description:**  \n  \nThis endpoint allows an authenticated user to update an existing todo item identified by its ID. Only the author of the todo can perform the update. Users can update one or multiple fields, such as `title` and/or `description`. The API first validates the request body, checks authorization, and only then updates the todo. Upon success, it returns the updated todo item with the latest timestamps.\n\n**Key Notes:**\n\n- Authorization is enforced; users cannot modify others’ todos.\n    \n- Only fields provided in the request body will be updated.\n    \n- Returns `403 Forbidden` if the user is not the author, and `404 Not Found` if the todo does not exist."
+					},
+					"response": []
+				}
+			],
+			"description": "**Description:**\n\nThis folder contains all endpoints related to managing todos in the Todo List API. Only authenticated users can access these endpoints. Each todo is associated with a specific user (author), and the API enforces strict authorization rules to ensure users can only manage their own todos.\n\n**Included Endpoints:**\n\n1. **Create Todo (****`POST /todos`****)** – Add a new todo item linked to the authenticated user.\n    \n2. **Update Todo (****`PUT /todos/:id`****)** – Modify an existing todo; only the author can update.\n    \n3. **Delete Todo (****`DELETE /todos/:id`****)** – Remove an existing todo; only the author can delete.\n    \n4. **Get Todos (****`GET /todos`****)** – Retrieve a paginated list of todos created by the user.\n    \n5. **Get Single Todo (****`GET /todos/:id`****)** – Retrieve details of a specific todo; only the author can access.\n    \n\n**Notes:**\n\n- All endpoints require the `Authorization: Bearer` header.\n    \n- Supports pagination (`page` and `limit` query parameters) for efficient data retrieval.\n    \n- Proper error responses are provided for unauthorized access (`403`), not found resources (`404`), and server errors (`500`).\n    \n- Input validation ensures todos are created and updated with valid data."
+		}
+	]
+}
